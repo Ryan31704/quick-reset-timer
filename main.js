@@ -1,6 +1,8 @@
 let startTime = 0;
 let now = 0;
 let countDownDate = 0;
+let endSound = new Audio("end.mp3")
+let timeleft = 0
 
 document.getElementById("reset-button").onclick = function()
 {
@@ -16,7 +18,7 @@ document.getElementById("reset-button").onclick = function()
 
 function countDown()
 {
-  setInterval(() => {
+  let counting = setInterval(() => {
     now = new Date().getTime();
     timeleft = countDownDate - now;
     let seconds = Math.floor(timeleft / 1000);
@@ -24,8 +26,9 @@ function countDown()
     console.log(seconds);
     if(timeleft < 0)
     {
-      clearInterval();
       document.getElementById("clock-text").innerHTML = 0;
+      endSound.play();
+      clearInterval(counting);
     }
 }, 1000);
 }
