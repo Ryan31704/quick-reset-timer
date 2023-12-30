@@ -13,10 +13,10 @@ document.getElementById("reset-button").onclick = function()
   countDownDate = new Date().getTime() + (1000 * startTime) + 1000
   countDown();
 }
+
 function countDown()
 {
   setInterval(() => {
-
     now = new Date().getTime();
     timeleft = countDownDate - now;
     let seconds = Math.floor(timeleft / 1000);
