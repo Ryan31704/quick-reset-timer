@@ -2,6 +2,7 @@ let startTime = 0;
 let now = 0;
 let countDownDate = 0;
 let endSound = new Audio("end.mp3")
+let countDownSound = new Audio("countdown.mp3")
 let timeleft = 0
 
 document.getElementById("reset-button").onclick = function()
@@ -23,11 +24,14 @@ function countDown()
     timeleft = countDownDate - now;
     let seconds = Math.floor(timeleft / 1000);
     document.getElementById("clock-text").innerHTML = seconds;
-    console.log(seconds);
+    // console.log(seconds);
+    if(seconds <= 3 && seconds > 2)
+      countDownSound.play();
+    if(timeleft < 1000)
+      endSound.play();
     if(timeleft < 0)
     {
       document.getElementById("clock-text").innerHTML = 0;
-      endSound.play();
       clearInterval(counting);
     }
 }, 1000);
