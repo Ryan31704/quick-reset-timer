@@ -1,0 +1,16 @@
+{
+  "name": "Quick Reset Timer",
+  "short_name": "Quick Reset Timer",
+  "start_url": "/?home = true",
+  "icons": [
+    {
+      "src": "/clock.svg",
+      "sizes": "any",
+      "purpose": "maskable any"
+    }
+  ],
+  "theme_color": "#282828",
+  "background_color": "#282828",
+  "display": "fullscreen",
+  "orientation": "portrait"
+}
