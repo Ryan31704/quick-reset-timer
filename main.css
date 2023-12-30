@@ -20,7 +20,7 @@ body{
 }
 
 #clock-text{
-  font-size: 200px;
+  font-size: 140px;
 }
 
 #start-button {
@@ -28,9 +28,10 @@ body{
   color: #FFFFFF;
   padding: 10px;
 }
+
 #reset-button {
   background-color: red;
   color: #FFFFFF;
-  padding: 25% 40%;
+  padding: 50% 40%;
   margin:10px;
 }
