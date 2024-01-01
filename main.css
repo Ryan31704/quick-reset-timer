@@ -23,11 +23,11 @@ body{
   font-size: 140px;
 }
 
-#start-button {
+/* #start-button {
   background-color: green;
   color: #FFFFFF;
   padding: 10px;
-}
+} */
 
 #reset-button {
   background-color: red;
