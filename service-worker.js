@@ -32,12 +32,32 @@ self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request)
       .then(response => {
-        // Cache hit - return response
+        // Return the cached response if found
         if (response) {
           return response;
         }
-        return fetch(event.request);
-      }
-    )
+
+        // Try fetching from the network as a fallback
+        return fetch(event.request).catch(() => {
+          // If both cache and network are unavailable,
+          // show the offline page
+          return caches.match('/index.html');
+        });
+      })
+  );
+});
+
+self.addEventListener('activate', event => {
+  const cacheWhitelist = ['my-site-cache-v1'];
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => {
+          if (cacheWhitelist.indexOf(cacheName) === -1) {
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
   );
 });
