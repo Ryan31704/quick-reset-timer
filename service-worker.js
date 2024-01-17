@@ -28,22 +28,26 @@ self.addEventListener('install', event => {
   );
 });
 
+// look at network first
 self.addEventListener('fetch', event => {
   event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        // Return the cached response if found
+    // First, try to fetch the resource from the network
+    fetch(event.request).catch(() => {
+      // If the network fetch fails, then try to get it from the cache
+      return caches.match(event.request).then(response => {
         if (response) {
           return response;
         }
 
-        // Try fetching from the network as a fallback
-        return fetch(event.request).catch(() => {
-          // If both cache and network are unavailable,
-          // show the offline page
+        // Optional: Return a default fallback page for certain requests
+        // if both the network and cache are unavailable.
+        // For example, you might want to return a specific offline page
+        // for HTML requests.
+        if (event.request.mode === 'navigate') {
           return caches.match('/index.html');
-        });
-      })
+        }
+      });
+    })
   );
 });
 
