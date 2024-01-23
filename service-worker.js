@@ -61,7 +61,7 @@ self.addEventListener('fetch', event => {
         return fetch(event.request).catch(() => {
           // If both cache and network are unavailable,
           // show the offline page
-          return caches.match('/offline.html');
+          return caches.match('/index.html');
         });
       })
   );
