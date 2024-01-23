@@ -43,9 +43,7 @@ self.addEventListener('fetch', event => {
         // if both the network and cache are unavailable.
         // For example, you might want to return a specific offline page
         // for HTML requests.
-        if (event.request.mode === 'navigate') {
           return caches.match('/index.html');
-        }
       });
     })
   );
