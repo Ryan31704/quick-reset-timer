@@ -7,7 +7,16 @@ workbox.routing.registerRoute(
   new workbox.strategies.NetworkFirst()
 );
 
-const CACHE_NAME = 'quick-reset-timer-cache-v2';
+importScripts(
+  'https://storage.googleapis.com/workbox-cdn/releases/6.4.1/workbox-sw.js'
+);
+
+workbox.routing.registerRoute(
+  ({request}) => request.destination === 'image',
+  new workbox.strategies.NetworkFirst()
+);
+
+const CACHE_NAME = 'quick-reset-timer-cache-v1';
 const urlsToCache = [
   '/',
   '/main.css',
@@ -28,27 +37,31 @@ self.addEventListener('install', event => {
   );
 });
 
+// look at network first
 self.addEventListener('fetch', event => {
   event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        // Return the cached response if found
+    // First, try to fetch the resource from the network
+    fetch(event.request).catch(() => {
+      // If the network fetch fails, then try to get it from the cache
+      return caches.match(event.request).then(response => {
         if (response) {
           return response;
         }
 
-        // Try fetching from the network as a fallback
-        return fetch(event.request).catch(() => {
-          // If both cache and network are unavailable,
-          // show the offline page
+        // Optional: Return a default fallback page for certain requests
+        // if both the network and cache are unavailable.
+        // For example, you might want to return a specific offline page
+        // for HTML requests.
+        if (event.request.mode === 'navigate') {
           return caches.match('/index.html');
-        });
-      })
+        }
+      });
+    })
   );
 });
 
 self.addEventListener('activate', event => {
-  const cacheWhitelist = ['quick-reset-timer-cache-v2'];
+  const cacheWhitelist = ['quick-reset-timer-cache-v1'];
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
