@@ -7,7 +7,7 @@ workbox.routing.registerRoute(
   new workbox.strategies.NetworkFirst()
 );
 
-const CACHE_NAME = 'quick-reset-timer-cache-v1';
+const CACHE_NAME = 'quick-reset-timer-cache-v2';
 const urlsToCache = [
   '/',
   '/main.css',
@@ -48,7 +48,7 @@ self.addEventListener('fetch', event => {
 });
 
 self.addEventListener('activate', event => {
-  const cacheWhitelist = ['my-site-cache-v1'];
+  const cacheWhitelist = ['quick-reset-timer-cache-v2'];
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
